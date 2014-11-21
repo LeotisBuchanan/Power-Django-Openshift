@@ -67,8 +67,31 @@ chmod +x post_deploy
 chmod +x deploy 
 cd ../..
 
+echo pwd
 
-echo "done"
+echo "#!/usr/bin/python
+import os
+
+virtenv = os.environ['OPENSHIFT_PYTHON_DIR'] + '/virtenv/'
+virtualenv = os.path.join(virtenv, 'bin/activate_this.py')
+try:
+    execfile(virtualenv, dict(__file__=virtualenv))
+except IOError:
+    pass
+from $1.wsgi import application
+
+#
+# Below for testing only
+#
+if __name__ == '__main__':
+    from wsgiref.simple_server import make_server
+    httpd = make_server('localhost', 8051, application)
+    # Wait for a single request, serve it and quit.
+    httpd.handle_request()
+" > wsgi.py
+
+echo "bootstrapping done
+      kindly now you can make the proper settings in $1/settings.py and your application is ready for deployment on openshift."
 
 #git add --all 
 #git commit -m "initial commit"
