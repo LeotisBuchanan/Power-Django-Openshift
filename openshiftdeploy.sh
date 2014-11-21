@@ -67,7 +67,7 @@ chmod +x post_deploy
 chmod +x deploy 
 cd ../..
 
-echo pwd
+echo $pwd
 
 echo "#!/usr/bin/python
 import os
@@ -88,12 +88,18 @@ if __name__ == '__main__':
     httpd = make_server('localhost', 8051, application)
     # Wait for a single request, serve it and quit.
     httpd.handle_request()
-" > wsgi.py
+" > wsgi.py 
 
+echo `pwd`
+cd ..
+python set_settings.py $1/$1/settings.py $1 >> settings.py
+rm $1/$1/settings.py
+mv settings.py $1/$1/settings.py
 echo "bootstrapping done
       kindly now you can make the proper settings in $1/settings.py and your application is ready for deployment on openshift."
+cd $1
 
-#git add --all 
-#git commit -m "initial commit"
-#git push origin 
+git add --all 
+git commit -m "initial commit"
+git push origin 
 
