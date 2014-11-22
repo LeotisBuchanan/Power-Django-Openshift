@@ -9,11 +9,11 @@ Power-Django-Openshift
 
 ###This Script 
 
-    1. will create a new project on openshift.
-    1. add mysql 5.5 cartridge in that project.
-    1. create a new Django project in that directory.
-    1. start a new app in Django project.
-    1. make proper settings in wsgi.py and settings.py for Openshift.
-    1. create the action_hooks to deploy project on openshift.
+    l. will create a new project on openshift.
+    l. add mysql 5.5 cartridge in that project.
+    l. create a new Django project in that directory.
+    l. start a new app in Django project.
+    l. make proper settings in wsgi.py and settings.py for Openshift.
+    l. create the action_hooks to deploy project on openshift.
 
 
