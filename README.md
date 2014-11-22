@@ -14,6 +14,6 @@ Power-Django-Openshift
     3. create a new Django project in that directory.
     4. start a new app in Django project.
     5. make proper settings in wsgi.py and settings.py for Openshift.
-    5. create the action_hooks to deploy project on openshift.
-    6. push the code to the repository on openshift.
+    6. create the action_hooks to deploy project on openshift.
+    7. push the code to the repository on openshift.
 
