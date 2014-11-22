@@ -8,6 +8,7 @@ Power-Django-Openshift
     $./openshiftdeploy.sh <Project-name>
 
 ###This Script 
+
     1. will create a new project on openshift.
     1. add mysql 5.5 cartridge in that project.
     1. create a new Django project in that directory.
