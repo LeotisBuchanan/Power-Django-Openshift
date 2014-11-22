@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import sys
 settings_file =file(sys.argv[1])
 settings_data = settings_file.read()
