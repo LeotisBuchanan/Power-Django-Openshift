@@ -1,17 +1,27 @@
+#!/bin/sh
+#author : Girish Joshi <girish946@gmail.com>
+
+#create a new Application on Rhcloud. 
 rhc app create $1 python-2.7 
+
+#add mysql cartridge to the project.
 rhc add-cartridge mysql-5.5 --app $1
 
+#create a new Django project.
 cd $1
 django-admin startproject $1
 
+#make it's directory structure right for openshift.
 cd $1
 mv manage.py ../manage.py
 mv $1/* ./
 rm -rf $1
 cd .. 	
 
+#start a new Django-app.
 django-admin startapp $1"app"
 
+#these directries are required by Openshift.
 mkdir static
 echo "put your static files here." >> static/Readme.md 
 
@@ -19,8 +29,11 @@ mkdir wsgi
 mkdir wsgi/static
 echo "this is just a dummy file" >> wsgi/static/Readme.md
 
+#writing requirements in the requirements.txt
 echo "django >= 1.7, < 1.8" >> requirements.txt
 
+
+#writing action_hooks scripts.
 cd .openshift/action_hooks/
 
 echo "#!/bin/bash
@@ -61,6 +74,8 @@ python \"\$OPENSHIFT_REPO_DIR\"/manage.py migrate --noinput
 echo \"Executing 'python $OPENSHIFT_REPO_DIR/manage.py collectstatic --noinput'\"
 python \"\$OPENSHIFT_REPO_DIR\"/manage.py collectstatic --noinput" >> deploy
 
+
+#grant execute permissions to action_hooks.
 chmod +x build 
 chmod +x pre_build 
 chmod +x post_deploy 
@@ -69,6 +84,7 @@ cd ../..
 
 echo $pwd
 
+#make the default wsgi.py right.
 echo "#!/usr/bin/python
 import os
 
@@ -92,6 +108,8 @@ if __name__ == '__main__':
 
 echo `pwd`
 cd ..
+
+#make the proper settings in settings.py of your project.
 python set_settings.py $1/$1/settings.py $1 >> settings.py
 rm $1/$1/settings.py
 mv settings.py $1/$1/settings.py
@@ -99,6 +117,7 @@ echo "bootstrapping done
       kindly now you can make the proper settings in $1/settings.py and your application is ready for deployment on openshift."
 cd $1
 
+#git push the project to the openshift.
 git add --all 
 git commit -m "initial commit"
 git push origin 
