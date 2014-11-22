@@ -1,8 +1,6 @@
 Power-Django-Openshift
 ======================
 
-#Power-Django-openshift 
-
 *tool to bootstrapping a Django1.7 project on [Openshift](www.openshift.com).*
 
 ##useage
